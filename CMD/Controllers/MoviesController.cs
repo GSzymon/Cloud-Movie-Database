@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
 using WebAPI.Models;
 
@@ -9,39 +8,41 @@ namespace WebAPI.Controllers
     public class MoviesController : Controller
     {
         private readonly MoviesHandler _moviesHandler;
-
-        // GET api/values
+        
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult ListAllMovies()
         {
-            var x = _moviesHandler.Get();
-            return Json(x);
+            return Json(_moviesHandler.GetAll());
         }
         
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("year/{year}")]
+        public JsonResult ListMoviesByYear(int year)
         {
-            return null; //_moviesHandler.Get();
+            return Json(_moviesHandler.GetByYear(year));
+        }
+        
+        [HttpGet("actor")]
+        public JsonResult ListMoviesWithGivenActor([FromBody]string actorName)
+        {
+            return Json(_moviesHandler.ListMoviesWithGivenActor(actorName));
         }
 
-        // POST api/values
         [HttpPost]
-        public dynamic Post([FromBody]Movie movie)
+        public dynamic AddMovie([FromBody]Movie movie)
         {
             return _moviesHandler.Add(movie);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public dynamic UpdateMovie(int id, [FromBody]Movie movie)
         {
+            return _moviesHandler.UpdateMovie(id, movie);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public dynamic DeleteMovie(int id)
         {
+            return _moviesHandler.DeleteMovie(id);
         }
 
         public MoviesController(MoviesHandler moviesHandler)

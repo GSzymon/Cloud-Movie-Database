@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using WebAPI.Repositories;
 
 namespace WebAPI.Models
 {
-    public class Actor : EntityBase
+    public class Actor
     {
         public Actor()
         {
@@ -16,6 +17,7 @@ namespace WebAPI.Models
         public string Birthday { get; set; }
         public string Filmography { get; set; }
 
+        [JsonIgnore]
         public ICollection<StarringDetails> StarringDetails { get; set; }
     }
 }

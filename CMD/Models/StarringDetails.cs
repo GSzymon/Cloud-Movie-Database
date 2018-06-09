@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebAPI.Models
+﻿namespace WebAPI.Models
 {
-    public partial class StarringDetails
+    public class StarringDetails
     {
         public int ActorId { get; set; }
         public int MovieId { get; set; }

@@ -1,9 +1,8 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Repositories;
 
@@ -11,22 +10,46 @@ namespace WebAPI.Handlers
 {
     public class MoviesHandler
     {
-        private readonly IRepository<Movie> _repository;
+        private readonly IMovieRepository _movieRepository;
 
-        public List<Movie> Get()
+        public IEnumerable<Movie> GetAll()
         {
-            var content = _repository.GetAll();
+            var content = _movieRepository.Get();
             return content.ToList();
         }
 
-        public HttpStatusCode Add(Movie movie)
+        public IEnumerable<Movie> GetByYear(int year)
         {
-            return HttpStatusCode.OK;
+            var content = _movieRepository.Get(item => item.Year == year);
+            return content.ToList();
+        }
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        public IEnumerable<Movie> ListMoviesWithGivenActor(string actorName)
+        {
+            var content = _movieRepository.Get(item => item.StarringActors.Contains(actorName));
+            return content;
         }
 
-        public MoviesHandler(IRepository<Movie> repository)
+        public HttpResponse Add(Movie movie)
         {
-            _repository = repository;
+            throw new NotImplementedException();
+        }
+
+        public object UpdateMovie(int id, Movie movie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object DeleteMovie(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public MoviesHandler(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
         }
     }
 }
