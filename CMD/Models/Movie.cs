@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WebAPI.Repositories;
 
 namespace WebAPI.Models
 {
-    public partial class Movies
+    public class Movie : EntityBase
     {
-        public Movies()
+        public Movie()
         {
             StarringDetails = new HashSet<StarringDetails>();
         }
@@ -17,5 +17,6 @@ namespace WebAPI.Models
         public string StarringActors { get; set; }
 
         public ICollection<StarringDetails> StarringDetails { get; set; }
+        //public ICollection<int> StarringActorsIds { get; set; }
     }
 }

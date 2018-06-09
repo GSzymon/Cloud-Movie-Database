@@ -8,7 +8,7 @@ namespace WebAPI.Models
         public int ActorId { get; set; }
         public int MovieId { get; set; }
 
-        public Actors Actor { get; set; }
-        public Movies Movie { get; set; }
+        public Actor Actor { get; set; }
+        public Movie Movie { get; set; }
     }
 }

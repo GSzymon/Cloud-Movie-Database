@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WebAPI.Repositories;
 
 namespace WebAPI.Models
 {
-    public partial class Actors
+    public class Actor : EntityBase
     {
-        public Actors()
+        public Actor()
         {
             StarringDetails = new HashSet<StarringDetails>();
         }

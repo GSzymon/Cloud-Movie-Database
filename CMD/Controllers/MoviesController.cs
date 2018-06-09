@@ -1,29 +1,35 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Handlers;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class MoviesController : Controller
     {
+        private readonly MoviesHandler _moviesHandler;
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public JsonResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var x = _moviesHandler.Get();
+            return Json(x);
         }
-
+        
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return null; //_moviesHandler.Get();
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public dynamic Post([FromBody]Movie movie)
         {
+            return _moviesHandler.Add(movie);
         }
 
         // PUT api/values/5
@@ -36,6 +42,11 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        public MoviesController(MoviesHandler moviesHandler)
+        {
+            _moviesHandler = moviesHandler;
         }
     }
 }

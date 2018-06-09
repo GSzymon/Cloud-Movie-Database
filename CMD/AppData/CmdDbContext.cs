@@ -1,36 +1,35 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Models;
 
-namespace WebAPI.Models
+namespace WebAPI.AppData
 {
-    public partial class cmd_databaseContext : DbContext
+    public class CmdDbContext : DbContext
     {
-        public cmd_databaseContext()
-        {
-        }
+        //public CmdDbContext()
+        //{
+        //}
 
-        public cmd_databaseContext(DbContextOptions<cmd_databaseContext> options)
+        public CmdDbContext(DbContextOptions<CmdDbContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Actors> Actors { get; set; }
-        public virtual DbSet<Movies> Movies { get; set; }
+        public virtual DbSet<Actor> Actors { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<StarringDetails> StarringDetails { get; set; }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=35.234.102.251;user=root;password=123456;database=cmd_database");
+                optionsBuilder.UseMySQL("server=35.234.102.251;user=root;password=123456;database=cmd_database");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Actors>(entity =>
+            modelBuilder.Entity<Actor>(entity =>
             {
                 entity.HasKey(e => e.ActorId);
 
@@ -49,7 +48,7 @@ namespace WebAPI.Models
                     .HasMaxLength(255);
             });
 
-            modelBuilder.Entity<Movies>(entity =>
+            modelBuilder.Entity<Movie>(entity =>
             {
                 entity.HasKey(e => e.MovieId);
 

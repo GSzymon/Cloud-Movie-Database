@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
+using WebAPI.AppData;
+using WebAPI.Handlers;
+using WebAPI.Models;
+using WebAPI.Repositories;
 
 namespace WebAPI
 {
@@ -18,8 +23,13 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
-            //services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+            var connectionString = Configuration.GetConnectionString("CmdConnection");
+            var connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            services.AddDbContext<CmdDbContext>(x => x.UseMySQL(connection));
+            services.AddTransient<MoviesHandler>();
+            services.AddTransient<IRepository<Movie>, Repository<Movie>>();
             services.AddMvc();
         }
 
