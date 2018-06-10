@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using WebAPI.AppData;
 using WebAPI.Models;
 
@@ -16,54 +17,52 @@ namespace WebAPI.Repositories
             _dbContext = dbContext;
         }
 
+        public Movie Get(int id)
+        {
+            var movie = _dbContext.Movies.Include(x => x.StarringDetails).First(y => y.MovieId == id);
+            return movie;
+        }
+
         public IEnumerable<Movie> Get()
         {
-            var movies = _dbContext.Set<Movie>().AsEnumerable();
-            IncludeNestedData(movies);
+            var movies = _dbContext.Movies.Include(x => x.StarringDetails);
             return movies;
         }
 
-        //public virtual IEnumerable<Movie> Get(Expression<Func<Movie, bool>> predicate)
-        public IEnumerable<Movie> Get(Func<Movie, bool> predicate)
+        public IEnumerable<Movie> SearchFor(Func<Movie, bool> predicate)
         {
-            //var movies = _dbContext.Set<Movie>().Where(predicate).AsEnumerable();
-            var movies = _dbContext.Movies.Where(predicate); //Where(x => x.).AsEnumerable();
-            IncludeNestedData(movies);
+            var movies = _dbContext.Movies.Include(x => x.StarringDetails).Where(predicate); 
             return movies;
         }
-        /*
-        public void Add(T entity)
+
+        public void Update(int id, Movie movie)
         {
-            _dbContext.Set<T>().Add(entity);
-            _dbContext.SaveChanges();
+
         }
 
-        public void Update(T entity)
+        public void Insert(Movie movie)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            _dbContext.SaveChanges();
-        }
-
-        public void Delete(T entity)
-        {
-            _dbContext.Set<T>().Remove(entity);
-            _dbContext.SaveChanges();
-        }
-        */
-
-        private void IncludeNestedData(IEnumerable<Movie> movies)
-        {
-            foreach (var movie in movies)
-            {
-                var starrings = _dbContext.StarringDetails.Where(x => x.MovieId == movie.MovieId);
-                var starringActorsNames = new List<string>();
-                foreach (var starring in starrings)
-                {
-                    var concreteActors = _dbContext.Actors.Where(x => x.ActorId == starring.ActorId).ToList();
-                    concreteActors.ForEach(x => starringActorsNames.Add(x.FirstName + " " + x.LastName));
-                }
-                movie.StarringActors = string.Join(", ", starringActorsNames);
-            }
+            
         }
     }
 }
+
+/*
+public void Add(T entity)
+{
+    _dbContext.Set<T>().Add(entity);
+    _dbContext.SaveChanges();
+}
+
+public void Update(T entity)
+{
+    _dbContext.Entry(entity).State = EntityState.Modified;
+    _dbContext.SaveChanges();
+}
+
+public void Delete(T entity)
+{
+    _dbContext.Set<T>().Remove(entity);
+    _dbContext.SaveChanges();
+}
+*/

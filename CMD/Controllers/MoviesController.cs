@@ -8,7 +8,12 @@ namespace WebAPI.Controllers
     public class MoviesController : Controller
     {
         private readonly MoviesHandler _moviesHandler;
-        
+
+        public MoviesController(MoviesHandler moviesHandler)
+        {
+            _moviesHandler = moviesHandler;
+        }
+
         [HttpGet]
         public JsonResult ListAllMovies()
         {
@@ -21,10 +26,10 @@ namespace WebAPI.Controllers
             return Json(_moviesHandler.GetByYear(year));
         }
         
-        [HttpGet("actor")]
-        public JsonResult ListMoviesWithGivenActor([FromBody]string actorName)
+        [HttpGet("actor/{id}")]
+        public JsonResult ListMoviesWithGivenActor(int id)
         {
-            return Json(_moviesHandler.ListMoviesWithGivenActor(actorName));
+            return Json(_moviesHandler.ListMoviesWithGivenActor(id));
         }
 
         [HttpPost]
@@ -43,11 +48,6 @@ namespace WebAPI.Controllers
         public dynamic DeleteMovie(int id)
         {
             return _moviesHandler.DeleteMovie(id);
-        }
-
-        public MoviesController(MoviesHandler moviesHandler)
-        {
-            _moviesHandler = moviesHandler;
         }
     }
 }

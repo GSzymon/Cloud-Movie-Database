@@ -9,6 +9,11 @@ namespace WebAPI.Controllers
     {
         private readonly ActorsHandler _actorsHandler;
 
+        public ActorsController(ActorsHandler actorsHandler)
+        {
+            _actorsHandler = actorsHandler;
+        }
+
         [HttpGet("id/{id}")]
         public JsonResult ListActorsStarringInMovie(int id)
         {
@@ -19,12 +24,6 @@ namespace WebAPI.Controllers
         public dynamic LinkActorToExistingMovie(int id, [FromBody]Actor actor)
         {
             return _actorsHandler.LinkActorToExistingMovie(id, actor);
-        }
-
-
-        public ActorsController(ActorsHandler actorsHandler)
-        {
-            _actorsHandler = actorsHandler;
         }
     }
 }

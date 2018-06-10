@@ -11,6 +11,7 @@ namespace WebAPI.Handlers
     public class MoviesHandler
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IActorRepository _actorRepository;
 
         public IEnumerable<Movie> GetAll()
         {
@@ -20,18 +21,24 @@ namespace WebAPI.Handlers
 
         public IEnumerable<Movie> GetByYear(int year)
         {
-            var content = _movieRepository.Get(item => item.Year == year);
+            var content = _movieRepository.SearchFor(item => item.Year == year);
             return content.ToList();
         }
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        public IEnumerable<Movie> ListMoviesWithGivenActor(string actorName)
+        public IEnumerable<Movie> ListMoviesWithGivenActor(int actorId)
         {
-            var content = _movieRepository.Get(item => item.StarringActors.Contains(actorName));
-            return content;
+            var starringDetails = _actorRepository.Get(actorId).StarringDetails.AsEnumerable().ToList();
+            var movies = new List<Movie>();
+
+            foreach (var item in starringDetails)
+            {
+                movies.Add(_movieRepository.Get(item.MovieId));
+            }
+
+            return movies;
         }
 
-        public HttpResponse Add(Movie movie)
+        public void AddMovie(Movie movie)
         {
             throw new NotImplementedException();
         }
@@ -46,10 +53,10 @@ namespace WebAPI.Handlers
             throw new NotImplementedException();
         }
 
-
-        public MoviesHandler(IMovieRepository movieRepository)
+        public MoviesHandler(IMovieRepository movieRepository, IActorRepository actorRepository)
         {
             _movieRepository = movieRepository;
+            _actorRepository = actorRepository;
         }
     }
 }
