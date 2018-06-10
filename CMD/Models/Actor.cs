@@ -19,5 +19,17 @@ namespace WebAPI.Models
 
         [JsonIgnore]
         public ICollection<StarringDetails> StarringDetails { get; set; }
+
+        public void AppendFilmography(string title)
+        {
+            if (string.IsNullOrEmpty(Filmography))
+            {
+                Filmography = title;
+            }
+            else
+            {
+                Filmography += ", " + title;
+            }
+        }
     }
 }

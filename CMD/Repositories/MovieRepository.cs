@@ -10,7 +10,7 @@ namespace WebAPI.Repositories
 {
     public class MovieRepository : IMovieRepository
     {
-        private readonly CmdDbContext _dbContext;
+        public readonly CmdDbContext _dbContext;
 
         public MovieRepository(CmdDbContext dbContext)
         {
@@ -42,7 +42,7 @@ namespace WebAPI.Repositories
 
         public void Insert(Movie movie)
         {
-            
+            _dbContext.Movies.Add(movie);
         }
     }
 }

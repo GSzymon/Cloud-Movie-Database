@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
 using WebAPI.Models;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
 {
@@ -33,21 +34,21 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public dynamic AddMovie([FromBody]Movie movie)
+        public void AddMovie([FromBody]MovieViewModel movieVm)
         {
-            return _moviesHandler.Add(movie);
+            _moviesHandler.Add(movieVm);
         }
 
         [HttpPut("{id}")]
         public dynamic UpdateMovie(int id, [FromBody]Movie movie)
         {
-            return _moviesHandler.UpdateMovie(id, movie);
+            return _moviesHandler.Update(id, movie);
         }
 
         [HttpDelete("{id}")]
         public dynamic DeleteMovie(int id)
         {
-            return _moviesHandler.DeleteMovie(id);
+            return _moviesHandler.Delete(id);
         }
     }
 }

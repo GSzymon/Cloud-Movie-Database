@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Repositories;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Handlers
 {
@@ -38,17 +39,25 @@ namespace WebAPI.Handlers
             return movies;
         }
 
-        public void AddMovie(Movie movie)
+        public void Add(MovieViewModel movieVm)
+        {
+            var movie = new Movie(movieVm);
+            foreach (var actorId in movieVm.StarringActorsIds)
+            {
+                var actor = _actorRepository.Get(actorId);
+                actor.AppendFilmography(movieVm.Title);
+                //movie.StarringDetails.Add(new StarringDetails(actorId, movieId));
+            }
+            
+            _movieRepository.Insert(movie);
+        }
+
+        public object Update(int id, Movie movie)
         {
             throw new NotImplementedException();
         }
 
-        public object UpdateMovie(int id, Movie movie)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object DeleteMovie(int id)
+        public object Delete(int id)
         {
             throw new NotImplementedException();
         }
