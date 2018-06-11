@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
+using WebAPI.Models.Other;
 using WebAPI.Repositories;
 using WebAPI.ViewModels;
 
@@ -11,45 +12,41 @@ namespace WebAPI.Handlers
 {
     public class MoviesHandler
     {
-        private readonly IMovieRepository _movieRepository;
-        private readonly IActorRepository _actorRepository;
+        private readonly IActorMovieRepository _repository;
 
         public IEnumerable<Movie> GetAll()
         {
-            var content = _movieRepository.Get();
-            return content.ToList();
+            var actorMovies = _repository.GetAll();
+            return actorMovies.Select(x => x.Movie);
         }
 
         public IEnumerable<Movie> GetByYear(int year)
         {
-            var content = _movieRepository.SearchFor(item => item.Year == year);
-            return content.ToList();
+            var actorMovies = _repository.SearchFor(x => x.Movie.Year == year);
+            return actorMovies.Select(x => x.Movie);
         }
 
         public IEnumerable<Movie> ListMoviesWithGivenActor(int actorId)
         {
-            var starringDetails = _actorRepository.Get(actorId).StarringDetails.AsEnumerable().ToList();
-            var movies = new List<Movie>();
-
-            foreach (var item in starringDetails)
-            {
-                movies.Add(_movieRepository.Get(item.MovieId));
-            }
-
-            return movies;
+            var actorMovies = _repository.SearchFor(x => x.ActorId == actorId);
+            return actorMovies.Select(x => x.Movie);
         }
 
         public void Add(MovieViewModel movieVm)
         {
+            /*
             var movie = new Movie(movieVm);
-            foreach (var actorId in movieVm.StarringActorsIds)
-            {
-                var actor = _actorRepository.Get(actorId);
-                actor.AppendFilmography(movieVm.Title);
-                //movie.StarringDetails.Add(new StarringDetails(actorId, movieId));
-            }
-            
-            _movieRepository.Insert(movie);
+            var actors = new List<Actor>();
+            var actorsMovies = new List<ActorMovie>();
+            var people = new List<Person>();
+
+            movieVm.StarringActorsIds.ForEach(x => actors.Add(_actorRepository.Get(x)));
+            actors.ForEach(x => x.AppendFilmography(movieVm.Title));
+            actors.ForEach(x => people.Add(new Person(x.FirstName, x.LastName)));
+            movie.AppendStarringActors(people);
+
+            actorsMovies.ForEach(x=> _repository.Insert(movie)); // zmienic na jedno repository (ActorMovie)
+            */   
         }
 
         public object Update(int id, Movie movie)
@@ -62,10 +59,9 @@ namespace WebAPI.Handlers
             throw new NotImplementedException();
         }
 
-        public MoviesHandler(IMovieRepository movieRepository, IActorRepository actorRepository)
+        public MoviesHandler(IActorMovieRepository repository)
         {
-            _movieRepository = movieRepository;
-            _actorRepository = actorRepository;
+            _repository = repository;
         }
     }
 }

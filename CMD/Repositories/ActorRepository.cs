@@ -20,11 +20,11 @@ namespace WebAPI.Repositories
         
         public Actor Get(int id)
         {
-            var actor = _dbContext.Actors.Include(x => x.StarringDetails).First(y => y.ActorId == id);
+            var actor = _dbContext.Actors.First(y => y.ActorId == id);
             return actor;
         }
 
-        public IEnumerable<Actor> Get()
+        public IEnumerable<Actor> GetAll()
         {
             var actors = _dbContext.Actors.Include(x => x.StarringDetails);
             return actors;

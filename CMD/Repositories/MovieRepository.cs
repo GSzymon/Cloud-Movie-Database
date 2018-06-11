@@ -23,7 +23,7 @@ namespace WebAPI.Repositories
             return movie;
         }
 
-        public IEnumerable<Movie> Get()
+        public IEnumerable<Movie> GetAll()
         {
             var movies = _dbContext.Movies.Include(x => x.StarringDetails);
             return movies;
@@ -42,7 +42,13 @@ namespace WebAPI.Repositories
 
         public void Insert(Movie movie)
         {
-            _dbContext.Movies.Add(movie);
+            throw new NotImplementedException();
+        }
+
+        public void Insert(ActorMovie actorMovie)
+        {
+            _dbContext.ActorsMovies.Add(actorMovie);
+            _dbContext.SaveChanges();
         }
     }
 }

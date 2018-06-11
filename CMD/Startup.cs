@@ -32,6 +32,7 @@ namespace WebAPI
             services.AddTransient<MoviesHandler>();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IActorRepository, ActorRepository>();
+            services.AddTransient<IActorMovieRepository, ActorMovieRepository>();
 
             services.AddMvc();
         }

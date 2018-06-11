@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Newtonsoft.Json;
+using WebAPI.Models.Other;
 using WebAPI.Repositories;
 using WebAPI.ViewModels;
 
@@ -11,7 +13,7 @@ namespace WebAPI.Models
 
         public Movie()
         {
-            StarringDetails = new HashSet<StarringDetails>();
+            StarringDetails = new HashSet<ActorMovie>();
         }
 
         public Movie(MovieViewModel movieVm)
@@ -28,6 +30,12 @@ namespace WebAPI.Models
         public string StarringActors { get; set; }
 
         [JsonIgnore]
-        public ICollection<StarringDetails> StarringDetails { get; set; }
+        public ICollection<ActorMovie> StarringDetails { get; set; }
+
+        public void AppendStarringActors(List<Person> actors)
+        {
+            var actorsToAppend = string.Join(", ", actors);
+            StarringActors += actorsToAppend;
+        }
     }
 }
