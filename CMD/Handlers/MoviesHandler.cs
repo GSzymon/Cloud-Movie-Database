@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Models.Other;
 using WebAPI.Repositories;
+using WebAPI.Utills.Methods;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Handlers
@@ -13,45 +14,72 @@ namespace WebAPI.Handlers
     public class MoviesHandler
     {
         private readonly IActorMovieRepository _repository;
+        private readonly IActorRepository _actorRepository;
 
-        public IEnumerable<Movie> GetAll()
+        public IEnumerable<ComplexMovie> GetAll()
         {
             var actorMovies = _repository.GetAll();
-            return actorMovies.Select(x => x.Movie);
+            var content = ComplexObjectCreator.GetComplexMovies(actorMovies);
+            return content;
         }
 
-        public IEnumerable<Movie> GetByYear(int year)
+        public IEnumerable<ComplexMovie> GetByYear(int year)
         {
             var actorMovies = _repository.SearchFor(x => x.Movie.Year == year);
-            return actorMovies.Select(x => x.Movie);
+            var content = ComplexObjectCreator.GetComplexMovies(actorMovies);
+            return content;
         }
 
-        public IEnumerable<Movie> ListMoviesWithGivenActor(int actorId)
+        public IEnumerable<ComplexMovie> ListMoviesWithGivenActor(int actorId)
         {
             var actorMovies = _repository.SearchFor(x => x.ActorId == actorId);
-            return actorMovies.Select(x => x.Movie);
+            var content = ComplexObjectCreator.GetComplexMovies(actorMovies);
+            return content;
         }
 
         public void Add(MovieViewModel movieVm)
         {
-            /*
-            var movie = new Movie(movieVm);
+            var actorsIds = movieVm.StarringActorsIds;
+            var movie = Movie.Create(movieVm);
             var actors = new List<Actor>();
-            var actorsMovies = new List<ActorMovie>();
-            var people = new List<Person>();
+            var names = new List<Name>();
 
-            movieVm.StarringActorsIds.ForEach(x => actors.Add(_actorRepository.Get(x)));
+            foreach (var actorId in actorsIds)
+            {
+                var actor = _repository.SearchFor(x => x.ActorId == actorId).Select(x => x.Actor).First();
+                actors.Add(actor);
+            }
+
             actors.ForEach(x => x.AppendFilmography(movieVm.Title));
-            actors.ForEach(x => people.Add(new Person(x.FirstName, x.LastName)));
-            movie.AppendStarringActors(people);
 
-            actorsMovies.ForEach(x=> _repository.Insert(movie)); // zmienic na jedno repository (ActorMovie)
-            */   
+            actors.ForEach(x => names.Add(new Name(x.FirstName, x.LastName)));
+            movie.AppendStarringActors(names);
+
+            actors.ForEach(x => _repository.Add(new ActorMovie() { Movie = movie, Actor = x }));
         }
 
-        public object Update(int id, Movie movie)
+        public void Update(int id, MovieViewModel movieVm)
         {
-            throw new NotImplementedException();
+            var newActorsIds = movieVm.StarringActorsIds;
+            var actors = new List<Actor>();
+            var names = new List<Name>();
+            //var staleActorsMovies = _repository.SearchFor(x => x.Movie.MovieId == id).First().Movie.ActorsMovies;
+
+            foreach (var actorId in newActorsIds)
+            {
+                var actor = _actorRepository.SearchFor(x => x.ActorId == actorId).First();
+               // var actor = _repository.SearchFor(x => x.Actor.ActorId == actorId);
+                actors.Add(actor);
+            }
+
+            var movie = Movie.Create(movieVm);
+            movie.MovieId = id;
+
+            actors.ForEach(x => names.Add(new Name(x.FirstName, x.LastName)));
+            movie.AppendStarringActors(names);
+            //var names = new List<Name>();
+
+            actors.ForEach(x => _repository.Update(new ActorMovie() { Movie = movie, Actor = x }));
         }
 
         public object Delete(int id)
@@ -59,9 +87,10 @@ namespace WebAPI.Handlers
             throw new NotImplementedException();
         }
 
-        public MoviesHandler(IActorMovieRepository repository)
+        public MoviesHandler(IActorMovieRepository repository, IActorRepository actorRepository)
         {
             _repository = repository;
+            _actorRepository = actorRepository;
         }
     }
 }

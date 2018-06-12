@@ -8,7 +8,7 @@ namespace WebAPI.Models
     {
         public Actor()
         {
-            StarringDetails = new HashSet<ActorMovie>();
+            ActorsMovies = new HashSet<ActorMovie>();
         }
 
         public int ActorId { get; set; }
@@ -18,7 +18,7 @@ namespace WebAPI.Models
         public string Filmography { get; set; }
 
         [JsonIgnore]
-        public ICollection<ActorMovie> StarringDetails { get; set; }
+        public ICollection<ActorMovie> ActorsMovies { get; set; }
 
         public void AppendFilmography(string title)
         {

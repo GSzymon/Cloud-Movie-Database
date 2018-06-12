@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models.Other
 {
-    public class Person
+    public class Name
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public Person(string firstName, string lastName)
+        public Name(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;

@@ -29,13 +29,13 @@ namespace WebAPI.Repositories
 
         public void Add(ActorMovie actorMovie)
         {
-            _context.ActorsMovies.Add(actorMovie);
+            _context.Add(actorMovie);
             _context.SaveChanges();
         }
 
         public void Update(ActorMovie actorMovie)
         {
-            _context.ActorsMovies.Update(actorMovie);
+            _context.Update(actorMovie);
             _context.SaveChanges();
         }
 

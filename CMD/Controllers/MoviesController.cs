@@ -40,9 +40,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public dynamic UpdateMovie(int id, [FromBody]Movie movie)
+        public void UpdateMovie(int id, [FromBody]MovieViewModel movieVm)
         {
-            return _moviesHandler.Update(id, movie);
+            _moviesHandler.Update(id, movieVm);
         }
 
         [HttpDelete("{id}")]

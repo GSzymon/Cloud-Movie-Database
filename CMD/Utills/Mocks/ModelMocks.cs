@@ -15,10 +15,7 @@ namespace WebAPI.Utills.Mocks
             movie.Year = 1234;
             movie.Genre = "test genre 1";
 
-            foreach (var x in movie.StarringDetails)
-            {
-                //      movie.StarringActors += x.
-            }
+            
 
             return movie;
         }

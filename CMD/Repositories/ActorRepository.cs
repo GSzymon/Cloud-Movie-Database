@@ -23,16 +23,16 @@ namespace WebAPI.Repositories
             var actor = _dbContext.Actors.First(y => y.ActorId == id);
             return actor;
         }
-
+        
         public IEnumerable<Actor> GetAll()
         {
-            var actors = _dbContext.Actors.Include(x => x.StarringDetails);
+            var actors = _dbContext.Actors.Include(x => x.ActorsMovies);
             return actors;
         }
-
+        
         public IEnumerable<Actor> SearchFor(Func<Actor, bool> predicate)
         {
-            var actors = _dbContext.Actors.Include(x => x.StarringDetails).Where(predicate);
+            var actors = _dbContext.Actors.Include(x => x.ActorsMovies).Where(predicate);
             return actors;
         }
 

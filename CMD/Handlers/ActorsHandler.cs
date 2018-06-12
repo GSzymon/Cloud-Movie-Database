@@ -9,7 +9,7 @@ namespace WebAPI.Handlers
 {
     public class ActorsHandler
     {
-        private readonly IActorRepository _actorRepository;
+        private readonly IActorMovieRepository _repository;
 
         public IEnumerable<string> ListActorsStarringInMovie(int id)
         {
@@ -22,9 +22,9 @@ namespace WebAPI.Handlers
         }
 
 
-        public ActorsHandler(IActorRepository actorRepository)
+        public ActorsHandler(IActorMovieRepository repository)
         {
-            _actorRepository = actorRepository;
+            _repository = repository;
         }
     }
 }

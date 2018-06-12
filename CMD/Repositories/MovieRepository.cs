@@ -16,25 +16,25 @@ namespace WebAPI.Repositories
         {
             _dbContext = dbContext;
         }
-
+        
         public Movie Get(int id)
         {
-            var movie = _dbContext.Movies.Include(x => x.StarringDetails).First(y => y.MovieId == id);
+            var movie = _dbContext.Movies.Include(x => x.ActorsMovies).First(y => y.MovieId == id);
             return movie;
         }
 
         public IEnumerable<Movie> GetAll()
         {
-            var movies = _dbContext.Movies.Include(x => x.StarringDetails);
+            var movies = _dbContext.Movies.Include(x => x.ActorsMovies);
             return movies;
         }
 
         public IEnumerable<Movie> SearchFor(Func<Movie, bool> predicate)
         {
-            var movies = _dbContext.Movies.Include(x => x.StarringDetails).Where(predicate); 
+            var movies = _dbContext.Movies.Include(x => x.ActorsMovies).Where(predicate); 
             return movies;
         }
-
+        
         public void Update(int id, Movie movie)
         {
 

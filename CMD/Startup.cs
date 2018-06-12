@@ -30,7 +30,7 @@ namespace WebAPI
 
             services.AddDbContext<CmdDbContext>(x => x.UseMySQL(connection));
             services.AddTransient<MoviesHandler>();
-            services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IActorMovieRepository, ActorMovieRepository>();
             services.AddTransient<IActorRepository, ActorRepository>();
             services.AddTransient<IActorMovieRepository, ActorMovieRepository>();
 
