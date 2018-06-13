@@ -24,10 +24,10 @@ namespace Tests.Utils
             var movies = new List<Movie>()
             {                                                                                                       //starring actors:
                 new Movie(), // for skip [0] cell                                                                   // [ids]
-                new Movie() {MovieId = 1, Title = "The Shawshank Redemption", Genre = "Drama"},                     // 1, 2
-                new Movie() {MovieId = 2, Title = "Se7en", Genre = "Crime"},                                        // 2
-                new Movie() {MovieId = 3, Title = "Intouchables", Genre = "Drama"},                                 // 3, 4
-                new Movie() {MovieId = 4, Title = "Transcendence", Genre = "Drama"},                                // 2, 6
+                new Movie() {MovieId = 1, Title = "The Shawshank Redemption", Genre = "Drama", Year = 1994},        // 1, 2
+                new Movie() {MovieId = 2, Title = "Se7en", Genre = "Crime", Year = 1995},                           // 2
+                new Movie() {MovieId = 3, Title = "Intouchables", Genre = "Drama", Year = 2004},                    // 3, 4
+                new Movie() {MovieId = 4, Title = "Transcendence", Genre = "Drama", Year = 2016},                   // 2, 6
             };
 
             var actorMovies = new List<ActorMovie>()
