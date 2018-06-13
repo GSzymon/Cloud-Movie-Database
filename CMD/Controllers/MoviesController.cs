@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
 using WebAPI.Validators;
 using WebAPI.ViewModels;
@@ -9,11 +10,6 @@ namespace WebAPI.Controllers
     public class MoviesController : Controller
     {
         private readonly MoviesHandler _moviesHandler;
-
-        public MoviesController(MoviesHandler moviesHandler)
-        {
-            _moviesHandler = moviesHandler;
-        }
 
         [HttpGet]
         public JsonResult ListAllMovies()
@@ -62,7 +58,19 @@ namespace WebAPI.Controllers
         [HttpDelete("{movieId}")]
         public void DeleteMovie(int movieId)
         {
-            _moviesHandler.Remove(movieId);
+            try
+            {
+                _moviesHandler.Remove(movieId);
+            }
+            catch (Exception exception)
+            {
+                Request.HttpContext.Response.StatusCode = 400;
+            }
+        }
+
+        public MoviesController(MoviesHandler moviesHandler)
+        {
+            _moviesHandler = moviesHandler;
         }
     }
 }

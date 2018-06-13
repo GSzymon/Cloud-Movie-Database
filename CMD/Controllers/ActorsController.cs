@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
 using WebAPI.Validators;
 using WebAPI.ViewModels;
@@ -37,7 +38,14 @@ namespace WebAPI.Controllers
         [HttpPut("{actorId}/movie/{movieId}")]
         public void LinkActorToExistingMovie(int actorId, int movieId)
         {
-            _actorsHandler.LinkActorToExistingMovie(actorId, movieId);
+            try
+            {
+                _actorsHandler.LinkActorToExistingMovie(actorId, movieId);
+            }
+            catch (Exception exception)
+            {
+                Request.HttpContext.Response.StatusCode = 400;
+            }
         }
     }
 }
