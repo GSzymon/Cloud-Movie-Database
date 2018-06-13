@@ -36,7 +36,7 @@ namespace Tests.Utils
         public static JsonResult TestListActorsStarringInMovie()
         {
             var content = "[{\"actorId\":2,\"firstName\":\"Morgan\",\"lastName\":\"Freeman\",\"birthday\":\"1937-06-01\",\"filmography\":[{\"movieId\":4,\"title\":\"Transcendence\",\"year\":2016,\"genre\":\"Drama\"}]},{\"actorId\":6,\"firstName\":\"Johnny\",\"lastName\":\"Depp\",\"birthday\":\"1980-12-01\",\"filmography\":[{\"movieId\":4,\"title\":\"Transcendence\",\"year\":2016,\"genre\":\"Drama\"}]}]";
-            var result = JsonConvert.DeserializeObject<List<ComplexMovie>>(content);
+            var result = JsonConvert.DeserializeObject<List<ComplexActor>>(content);
             return new JsonResult(result);
         }
     }

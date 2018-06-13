@@ -88,20 +88,15 @@ namespace Tests
 
 
 
-
-
-
-
-
         // ActorsController:
 
         [TestMethod]
         public void TestListActorsStarringInMovie()
         {
-            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesWithGivenActor(2).Value);
-            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesWithGivenProperActor().Value);
+            var actors = JsonConvert.SerializeObject(_actorsController.ListActorsStarringInMovie(4).Value);
+            var expectedActors = JsonConvert.SerializeObject(ExpectedResults.TestListActorsStarringInMovie().Value);
 
-            var result = movies.Equals(expectedMovies);
+            var result = actors.Equals(expectedActors);
             Assert.IsTrue(result);
         }
     }
