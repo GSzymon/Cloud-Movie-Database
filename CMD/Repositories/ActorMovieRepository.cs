@@ -28,6 +28,18 @@ namespace WebAPI.Repositories
             return _context.ActorsMovies.Include(x => x.Movie).Include(y => y.Actor).Where(predicate);
         }
 
+        public IEnumerable<Movie> SearchForMovies(Func<Movie, bool> predicate)
+        {
+            var movies = _context.Movies.Include(x => x.ActorsMovies).Where(predicate);
+            return movies;
+        }
+
+        public IEnumerable<Actor> SearchForActors(Func<Actor, bool> predicate)
+        {
+            var actors = _context.Actors.Include(x => x.ActorsMovies).Where(predicate);
+            return actors;
+        }
+
         public void Add(ActorMovie actorMovie)
         {
             _context.Add(actorMovie);
@@ -40,9 +52,9 @@ namespace WebAPI.Repositories
             _context.SaveChanges();
         }
 
-        public void Remove(ActorMovie actorMovie)
+        public void RemoveMovie(Movie movie)
         {
-            _context.ActorsMovies.Remove(actorMovie);
+            _context.Remove(movie);
             _context.SaveChanges();
         }
     }

@@ -14,8 +14,6 @@ namespace WebAPI.Handlers
     public class MoviesHandler
     {
         private readonly IActorMovieRepository _repository;
-        private readonly IActorRepository _actorRepository;
-        private readonly IMovieRepository _movieRepository;
 
         public IEnumerable<ComplexMovie> GetAll()
         {
@@ -44,14 +42,13 @@ namespace WebAPI.Handlers
             var movie = new Movie();
             var actors = new List<Actor>();
 
+            movie.Update(movieVm);
+
             foreach (var actorId in actorsIds)
             {
-                var actor = _actorRepository.SearchFor(x => x.ActorId == actorId).First();
+                var actor = _repository.SearchForActors(x => x.ActorId == actorId).First();
                 actors.Add(actor);
             }
-
-            MovieHelpers.UpdateMovie(movie, movieVm, actors);
-            ActorHelpers.AppendFilmography(actors, movie);
 
             actors.ForEach(x => _repository.Add(new ActorMovie() { Movie = movie, Actor = x }));
         }
@@ -59,40 +56,24 @@ namespace WebAPI.Handlers
         public void Update(int id, MovieViewModel movieVm)
         {
             var newActorsIds = movieVm.StarringActorsIds;
-            var newActors = new List<Actor>();
-            
-            foreach (var actorId in newActorsIds)
-            {
-                var actor = _actorRepository.SearchFor(x => x.ActorId == actorId).First();
-                newActors.Add(actor);
-            }
+            var movie = _repository.SearchForMovies(x => x.MovieId == id).First();
+            movie.Update(movieVm);
 
-            var movie = _movieRepository.SearchFor(x => x.MovieId == id).First();
-
-            var currentActorMovies = _movieRepository.SearchFor(x => x.MovieId == id).First().ActorsMovies.AsEnumerable();
-
-            var currentActorsIds = currentActorMovies.Select(x => x.Actor);
-            var currentActors = _actorRepository.SearchFor(x => currentActorsIds.Contains(x)).ToList();
-
-            ActorHelpers.UpdateActorsStarringInConcreteMovie(currentActors, newActors, movieVm.Title);
-            MovieHelpers.UpdateMovie(movie, movieVm, currentActors);
-
+            var currentActorMovies = _repository.SearchForMovies(x => x.MovieId == id).First().ActorsMovies.AsEnumerable();
             var newActorMovies = newActorsIds.Select(x => new ActorMovie {ActorId = x, MovieId = id});
 
             _repository.Update(currentActorMovies, newActorMovies);
-
         }
 
-        public object Delete(int id)
+        public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var movie = _repository.SearchForMovies(x => x.MovieId == id).First();
+            _repository.RemoveMovie(movie);
         }
 
-        public MoviesHandler(IActorMovieRepository repository, IActorRepository actorRepository, IMovieRepository movieRepository)
+        public MoviesHandler(IActorMovieRepository repository)
         {
             _repository = repository;
-            _actorRepository = actorRepository;
-            _movieRepository = movieRepository;
         }
     }
 }

@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\ActorRepository.cs" />
+    <Compile Remove="Repositories\IActorRepository.cs" />
+    <Compile Remove="Repositories\IMovieRepository.cs" />
+    <Compile Remove="Repositories\MovieRepository.cs" />
+    <Compile Remove="Utills\Methods\ActorHelpers.cs" />
+    <Compile Remove="Utills\Methods\MovieHelpers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -46,9 +46,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public dynamic DeleteMovie(int id)
+        public void DeleteMovie(int id)
         {
-            return _moviesHandler.Delete(id);
+            _moviesHandler.Remove(id);
         }
     }
 }

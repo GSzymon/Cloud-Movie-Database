@@ -50,6 +50,12 @@ namespace WebAPI.Repositories
             _dbContext.ActorsMovies.Add(actorMovie);
             _dbContext.SaveChanges();
         }
+
+        public void Remove<T>(T entity)
+        {
+            _dbContext.Remove(movie);
+            _dbContext.SaveChanges();
+        }
     }
 }
 
@@ -66,7 +72,7 @@ public void Update(T entity)
     _dbContext.SaveChanges();
 }
 
-public void Delete(T entity)
+public void Remove(T entity)
 {
     _dbContext.Set<T>().Remove(entity);
     _dbContext.SaveChanges();

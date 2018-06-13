@@ -12,5 +12,6 @@ namespace WebAPI.Repositories
         void Update(int id, Movie movie);
         void Insert(Movie movie);
         void Insert(ActorMovie actorMovie);
+        void Remove(Movie movie);
     }
 }
