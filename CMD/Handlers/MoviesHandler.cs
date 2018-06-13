@@ -1,10 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
-using WebAPI.Models.Other;
 using WebAPI.Repositories;
 using WebAPI.Utills.Methods;
 using WebAPI.ViewModels;

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using WebAPI.Repositories;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Models
 {
@@ -18,5 +18,12 @@ namespace WebAPI.Models
 
         [JsonIgnore]
         public ICollection<ActorMovie> ActorsMovies { get; set; }
+
+        public void Update(ActorViewModel actorVm)
+        {
+            FirstName = actorVm.FirstName;
+            LastName = actorVm.LastName;
+            Birthday = actorVm.Birthday;
+        }
     }
 }

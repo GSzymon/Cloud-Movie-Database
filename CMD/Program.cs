@@ -1,7 +1,5 @@
-﻿using System.Data.SqlClient;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using MySql.Data.MySqlClient;
 
 namespace WebAPI
 {

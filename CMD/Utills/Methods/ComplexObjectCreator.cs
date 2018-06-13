@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAPI.ViewModels;
 
@@ -23,6 +21,22 @@ namespace WebAPI.Utills.Methods
 
             return complexMovies;
         }
+
+        public static IEnumerable<ComplexActor> GetComplexActors(IEnumerable<ActorMovie> actorMovies)
+        {
+            var complexActors = new List<ComplexActor>();
+            var actors = actorMovies.Select(x => x.Actor).Distinct();
+
+            foreach (var actor in actors)
+            {
+                var filmography = actorMovies.Where(x => x.ActorId == actor.ActorId).Select(x => x.Movie);
+                var complexActor = ComplexActor.Create(actor, filmography);
+                complexActors.Add(complexActor);
+            }
+
+            return complexActors;
+        }
+
         /*
         public static ComplexMovie GetComplexMovie(IEnumerable<ActorMovie> actorMovies)
         {

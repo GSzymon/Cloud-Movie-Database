@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
-using WebAPI.Models;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
 {
@@ -14,16 +14,22 @@ namespace WebAPI.Controllers
             _actorsHandler = actorsHandler;
         }
 
-        [HttpGet("id/{id}")]
-        public JsonResult ListActorsStarringInMovie(int id)
+        [HttpGet("{movieId}")]
+        public JsonResult ListActorsStarringInMovie(int movieId)
         {
-            return Json(_actorsHandler.ListActorsStarringInMovie(id));
+            return Json(_actorsHandler.ListActorsStarringInMovie(movieId));
         }
 
-        [HttpPut("{id}")]
-        public dynamic LinkActorToExistingMovie(int id, [FromBody]Actor actor)
+        [HttpPost]
+        public void AddMovie([FromBody]ActorViewModel movieVm)
         {
-            return _actorsHandler.LinkActorToExistingMovie(id, actor);
+            _actorsHandler.Add(movieVm);
+        }
+
+        [HttpPut("{actorId}/movie/{movieId}")]
+        public void LinkActorToExistingMovie(int actorId, int movieId)
+        {
+            _actorsHandler.LinkActorToExistingMovie(actorId, movieId);
         }
     }
 }

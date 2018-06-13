@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAPI.Repositories;
+using WebAPI.Utills.Methods;
+using WebAPI.ViewModels;
 
 namespace WebAPI.Handlers
 {
@@ -11,14 +11,33 @@ namespace WebAPI.Handlers
     {
         private readonly IActorMovieRepository _repository;
 
-        public IEnumerable<string> ListActorsStarringInMovie(int id)
+        public IEnumerable<ComplexActor> ListActorsStarringInMovie(int movieId)
         {
-            throw new NotImplementedException();
+            var actorMovies = _repository.SearchFor(x => x.MovieId == movieId);
+            var actors = ComplexObjectCreator.GetComplexActors(actorMovies);
+            return actors;
         }
 
-        public object LinkActorToExistingMovie(int id, Actor actor)
+        public void Add(ActorViewModel actorVm)
         {
-            throw new NotImplementedException();
+            var moviesIds = actorVm.FilmographyIds;
+            var actor = new Actor();
+            var movies = new List<Movie>();
+
+            actor.Update(actorVm);
+
+            foreach (var movieId in moviesIds)
+            {
+                var movie = _repository.SearchForMovies(x => x.MovieId== movieId).First();
+                movies.Add(movie);
+            }
+
+            movies.ForEach(x => _repository.Add(new ActorMovie() { Movie = x, Actor = actor }));
+        }
+
+        public void LinkActorToExistingMovie(int actorId, int movieId)
+        {
+            _repository.Add(new ActorMovie() { ActorId = actorId, MovieId = movieId });
         }
 
 
@@ -26,5 +45,7 @@ namespace WebAPI.Handlers
         {
             _repository = repository;
         }
+
+        
     }
 }

@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using WebAPI.AppData;
 using WebAPI.Handlers;
-using WebAPI.Models;
 using WebAPI.Repositories;
 
 namespace WebAPI
@@ -30,6 +28,7 @@ namespace WebAPI
 
             services.AddDbContext<CmdDbContext>(x => x.UseMySQL(connection));
             services.AddTransient<MoviesHandler>();
+            services.AddTransient<ActorsHandler>();
             services.AddTransient<IActorMovieRepository, ActorMovieRepository>();
 
             services.AddMvc();

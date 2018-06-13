@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
-using WebAPI.Models;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
@@ -27,10 +26,10 @@ namespace WebAPI.Controllers
             return Json(_moviesHandler.GetByYear(year));
         }
         
-        [HttpGet("actor/{id}")]
-        public JsonResult ListMoviesWithGivenActor(int id)
+        [HttpGet("actor/{actorId}")]
+        public JsonResult ListMoviesWithGivenActor(int actorId)
         {
-            return Json(_moviesHandler.ListMoviesWithGivenActor(id));
+            return Json(_moviesHandler.ListMoviesWithGivenActor(actorId));
         }
 
         [HttpPost]
@@ -39,16 +38,16 @@ namespace WebAPI.Controllers
             _moviesHandler.Add(movieVm);
         }
 
-        [HttpPut("{id}")]
-        public void UpdateMovie(int id, [FromBody]MovieViewModel movieVm)
+        [HttpPut("{movieId}")]
+        public void UpdateMovie(int movieId, [FromBody]MovieViewModel movieVm)
         {
-            _moviesHandler.Update(id, movieVm);
+            _moviesHandler.Update(movieId, movieVm);
         }
 
-        [HttpDelete("{id}")]
-        public void DeleteMovie(int id)
+        [HttpDelete("{movieId}")]
+        public void DeleteMovie(int movieId)
         {
-            _moviesHandler.Remove(id);
+            _moviesHandler.Remove(movieId);
         }
     }
 }
