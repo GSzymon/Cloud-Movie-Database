@@ -13408,23 +13408,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Szymon\\.nuget\\packages\\": {},
+    "C:\\Users\\Szymek\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Szymon\\source\\repos\\CMD\\CMD\\WebAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Szymek\\Source\\Repos\\Cloud-Movie-Database\\CMD\\WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "C:\\Users\\Szymon\\source\\repos\\CMD\\CMD\\WebAPI.csproj",
-      "packagesPath": "C:\\Users\\Szymon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Szymon\\source\\repos\\CMD\\CMD\\obj\\",
+      "projectPath": "C:\\Users\\Szymek\\Source\\Repos\\Cloud-Movie-Database\\CMD\\WebAPI.csproj",
+      "packagesPath": "C:\\Users\\Szymek\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Szymek\\Source\\Repos\\Cloud-Movie-Database\\CMD\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Szymon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Szymek\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
