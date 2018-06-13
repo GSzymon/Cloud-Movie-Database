@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using Tests.Mocks;
 using Tests.Utils;
 using WebAPI.AppData;
@@ -13,7 +10,6 @@ using WebAPI.Controllers;
 using WebAPI.Handlers;
 using WebAPI.Models;
 using WebAPI.Repositories;
-using WebAPI.Utills.Methods;
 
 namespace Tests
 {
