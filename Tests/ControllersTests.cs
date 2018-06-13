@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Tests.Utils;
 using WebAPI.AppData;
 using WebAPI.Controllers;
 using WebAPI.Handlers;
-using WebAPI.Models;
 using WebAPI.Repositories;
-using WebAPI.ViewModels;
 
 namespace Tests
 {
@@ -38,15 +35,74 @@ namespace Tests
             DbHelpers.SeedDatabase(context);
         }
 
+        // MoviesController:
         [TestMethod]
         public void TestListAllMovies()
         {
-            var movies = _moviesController.ListAllMovies();
-            var expectedContent = new JsonResult(ModelMocks.GetActorMovieCollection());
-            var isOk = movies.Equals(expectedContent);
-            var xx = 5;
+            var movies = JsonConvert.SerializeObject(_moviesController.ListAllMovies().Value);
+            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListAllMovies().Value);
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
         }
 
-        
+        [TestMethod]
+        public void TestListMoviesByProperYear()
+        {
+            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesByYear(1994).Value);
+            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesByProperYear().Value);
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestListMoviesByWrongYear()
+        {
+            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesByYear(12).Value);
+            var expectedMovies = "[]";
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestListMoviesWithGivenProperActor()
+        {
+            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesWithGivenActor(2).Value);
+            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesWithGivenProperActor().Value);
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestListMoviesWithGivenWrongActor()
+        {
+            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesWithGivenActor(123).Value);
+            var expectedMovies = "[]";
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
+        }
+
+
+
+
+
+
+
+
+        // ActorsController:
+
+        [TestMethod]
+        public void TestListActorsStarringInMovie()
+        {
+            var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesWithGivenActor(2).Value);
+            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesWithGivenProperActor().Value);
+
+            var result = movies.Equals(expectedMovies);
+            Assert.IsTrue(result);
+        }
     }
 }

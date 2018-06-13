@@ -11,5 +11,19 @@ namespace WebAPI.Utills.Methods
         {
             return dateTime.ToString("yyyy-DD-dd");
         }
+
+        public static string GetProperDateFormat(string date)
+        {
+            try
+            {
+                var dateTime = DateTime.ParseExact(date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                return dateTime.ToString("yyyy-MM-dd");
+            }
+            catch (Exception exception)
+            {
+                return date;
+            }
+            
+        }
     }
 }

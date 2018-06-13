@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using WebAPI.Utills.Methods;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Models
@@ -14,8 +15,8 @@ namespace WebAPI.Models
         public string LastName { get; set; }
         public string Birthday
         {
-            get => _birthday.Substring(0, 10);
-            set => _birthday = value;
+            get => DateHelpers.GetProperDateFormat(_birthday.Substring(0, 10));
+            set => _birthday = DateHelpers.GetProperDateFormat(value);
         }
 
         [JsonIgnore]

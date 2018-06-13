@@ -14707,6 +14707,7 @@
       "MSTest.TestFramework >= 1.2.1",
       "Microsoft.NET.Test.Sdk >= 15.7.0",
       "Microsoft.NETCore.App >= 2.0.0",
+      "Newtonsoft.Json >= 11.0.2",
       "WebAPI >= 1.0.0"
     ]
   },
@@ -14771,6 +14772,10 @@
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[11.0.2, )"
           }
         },
         "imports": [
