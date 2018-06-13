@@ -8,15 +8,10 @@ namespace WebAPI.Models
     public class Actor
     {
         private string _birthday;
-        public Actor()
-        {
-            ActorsMovies = new HashSet<ActorMovie>();
-        }
 
         public int ActorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public string Birthday
         {
             get => _birthday.Substring(0, 10);
@@ -25,6 +20,11 @@ namespace WebAPI.Models
 
         [JsonIgnore]
         public ICollection<ActorMovie> ActorsMovies { get; set; }
+
+        public Actor()
+        {
+            ActorsMovies = new HashSet<ActorMovie>();
+        }
 
         public void Update(ActorViewModel actorVm)
         {

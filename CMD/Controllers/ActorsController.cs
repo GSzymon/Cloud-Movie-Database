@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Handlers;
+using WebAPI.Validators;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
@@ -21,9 +22,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public void AddMovie([FromBody]ActorViewModel movieVm)
+        public void AddActor([FromBody]ActorViewModel actorVm)
         {
-            _actorsHandler.Add(movieVm);
+            if (ActorValidator.IsValid(actorVm))
+            {
+                _actorsHandler.Add(actorVm);
+            }
+            else
+            {
+                Request.HttpContext.Response.StatusCode = 400;
+            }
         }
 
         [HttpPut("{actorId}/movie/{movieId}")]
