@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebAPI.Models;
-using WebAPI.ViewModels;
 
-namespace Tests.Utils
+namespace Tests.ExpectedTestsResults
 {
     public static class OtherActionsExpectedResults
     {

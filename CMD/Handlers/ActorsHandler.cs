@@ -44,7 +44,16 @@ namespace WebAPI.Handlers
 
         public void LinkActorToExistingMovie(int actorId, int movieId)
         {
-            _repository.Add(new ActorMovie() { ActorId = actorId, MovieId = movieId });
+            var currentActorMovies = _repository.SearchForMovies(x => x.MovieId == movieId).First().ActorsMovies.AsEnumerable();
+            var currentActors = currentActorMovies.Select(x => x.Actor);
+            var currentActorsIds = currentActors.Select(x => x.ActorId).ToList();
+
+            var newActorsIds = currentActorsIds;
+            newActorsIds.Add(actorId);
+            
+            var newActorMovies = newActorsIds.Select(x => new ActorMovie { ActorId = x, MovieId = movieId });
+
+            _repository.Update(currentActorMovies, newActorMovies);
         }
 
 

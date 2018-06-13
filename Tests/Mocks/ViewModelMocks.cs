@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WebAPI.ViewModels;
 
-namespace Tests.Utils
+namespace Tests.Mocks
 {
     public static class ViewModelMocks
     {

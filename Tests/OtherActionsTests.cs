@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Tests.Mocks;
 using Tests.Utils;
 using WebAPI.AppData;
 using WebAPI.Controllers;
@@ -145,10 +146,10 @@ namespace Tests
         [TestMethod]
         public void TestLinkActorToExistingMovie()
         {
-            _actorsController.LinkActorToExistingMovie(1, 5);
+            _actorsController.LinkActorToExistingMovie(1, 3);
             try
             {
-                _context.ActorsMovies.First(x => x.ActorId == 5 && x.MovieId == 2);
+                _context.ActorsMovies.First(x => x.ActorId == 1 && x.MovieId == 3);
                 Assert.IsTrue(true);
             }
             catch (Exception exception)

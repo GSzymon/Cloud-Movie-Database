@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebAPI.Models;
 
-namespace Tests.Utils
+namespace Tests.Mocks
 {
     public static class ModelMocks
     {
