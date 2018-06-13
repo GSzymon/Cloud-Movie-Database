@@ -36,14 +36,5 @@ namespace WebAPI.Utills.Methods
 
             return complexActors;
         }
-
-        /*
-        public static ComplexMovie GetComplexMovie(IEnumerable<ActorMovie> actorMovies)
-        {
-            var movie = actorMovies.Select(x => x.Movie).First();
-            var starringActors = actorMovies.Where(x => x.MovieId == movie.MovieId).Select(x => x.Actor);
-            return ComplexMovie.Create(movie, starringActors);
-        }
-        */
     }
 }
