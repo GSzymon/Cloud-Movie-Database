@@ -45,6 +45,12 @@ namespace WebAPI.Repositories
             _context.SaveChanges();
         }
 
+        public void AddActor(Actor actor)
+        {
+            _context.Actors.Add(actor);
+            _context.SaveChanges();
+        }
+
         public void Update(IEnumerable<ActorMovie> oldActorMovies, IEnumerable<ActorMovie> newActorMovies)
         {
             _context.TryUpdateManyToMany(oldActorMovies, newActorMovies, x => x.ActorId);

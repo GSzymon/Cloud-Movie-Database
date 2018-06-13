@@ -32,7 +32,14 @@ namespace WebAPI.Handlers
                 movies.Add(movie);
             }
 
-            movies.ForEach(x => _repository.Add(new ActorMovie() { Movie = x, Actor = actor }));
+            if (movies.Any())
+            {
+                movies.ForEach(x => _repository.Add(new ActorMovie() {Movie = x, Actor = actor}));
+            }
+            else
+            {
+                _repository.AddActor(actor);
+            }
         }
 
         public void LinkActorToExistingMovie(int actorId, int movieId)

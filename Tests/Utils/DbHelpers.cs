@@ -11,8 +11,12 @@ namespace Tests.Utils
     {
         public static void SeedDatabase(CmdDbContext context)
         {
-            var data = ModelMocks.GetActorMovieCollection();
-            context.AddRange(data);
+            var actorMovieCollection = ModelMocks.GetActorMovieCollection();
+            var actorsWithEmptyFilmography = ModelMocks.GetActorsWithEmptyFilmography();
+
+            context.AddRange(actorMovieCollection);
+            context.AddRange(actorsWithEmptyFilmography);
+
             context.SaveChanges();
         }
     }

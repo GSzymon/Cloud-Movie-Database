@@ -13,17 +13,18 @@ namespace Tests
     [TestClass]
     public class ControllersTests
     {
-        private MoviesController _moviesController;
-        private ActorsController _actorsController;
+        private static MoviesController _moviesController;
+        private static ActorsController _actorsController;
 
-        [TestInitialize]
-        public void Initialize()
+        [AssemblyInitialize]
+        public static void AssemblyInit(TestContext testContext)
         {
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<CmdDbContext>()
                 .UseSqlite(connection)
+                .EnableSensitiveDataLogging()
                 .Options;
 
             var context = new CmdDbContext(options);
@@ -89,7 +90,6 @@ namespace Tests
 
 
         // ActorsController:
-
         [TestMethod]
         public void TestListActorsStarringInMovie()
         {
