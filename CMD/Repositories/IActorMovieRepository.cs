@@ -11,7 +11,7 @@ namespace WebAPI.Repositories
         IEnumerable<ActorMovie> GetAll();
         IEnumerable<ActorMovie> SearchFor(Func<ActorMovie, bool> predicate);
         void Add(ActorMovie actorMovie);
-        void Update(ActorMovie actor);
+        void Update(IEnumerable<ActorMovie> oldActorMovies, IEnumerable<ActorMovie> newActorMovies);
         void Remove(ActorMovie actor);
     }
 }

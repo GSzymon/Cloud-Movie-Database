@@ -15,6 +15,7 @@ namespace WebAPI.Handlers
     {
         private readonly IActorMovieRepository _repository;
         private readonly IActorRepository _actorRepository;
+        private readonly IMovieRepository _movieRepository;
 
         public IEnumerable<ComplexMovie> GetAll()
         {
@@ -40,20 +41,17 @@ namespace WebAPI.Handlers
         public void Add(MovieViewModel movieVm)
         {
             var actorsIds = movieVm.StarringActorsIds;
-            var movie = Movie.Create(movieVm);
+            var movie = new Movie();
             var actors = new List<Actor>();
-            var names = new List<Name>();
 
             foreach (var actorId in actorsIds)
             {
-                var actor = _repository.SearchFor(x => x.ActorId == actorId).Select(x => x.Actor).First();
+                var actor = _actorRepository.SearchFor(x => x.ActorId == actorId).First();
                 actors.Add(actor);
             }
 
-            actors.ForEach(x => x.AppendFilmography(movieVm.Title));
-
-            actors.ForEach(x => names.Add(new Name(x.FirstName, x.LastName)));
-            movie.AppendStarringActors(names);
+            MovieHelpers.UpdateMovie(movie, movieVm, actors);
+            ActorHelpers.AppendFilmography(actors, movie);
 
             actors.ForEach(x => _repository.Add(new ActorMovie() { Movie = movie, Actor = x }));
         }
@@ -61,25 +59,28 @@ namespace WebAPI.Handlers
         public void Update(int id, MovieViewModel movieVm)
         {
             var newActorsIds = movieVm.StarringActorsIds;
-            var actors = new List<Actor>();
-            var names = new List<Name>();
-            //var staleActorsMovies = _repository.SearchFor(x => x.Movie.MovieId == id).First().Movie.ActorsMovies;
-
+            var newActors = new List<Actor>();
+            
             foreach (var actorId in newActorsIds)
             {
                 var actor = _actorRepository.SearchFor(x => x.ActorId == actorId).First();
-               // var actor = _repository.SearchFor(x => x.Actor.ActorId == actorId);
-                actors.Add(actor);
+                newActors.Add(actor);
             }
 
-            var movie = Movie.Create(movieVm);
-            movie.MovieId = id;
+            var movie = _movieRepository.SearchFor(x => x.MovieId == id).First();
 
-            actors.ForEach(x => names.Add(new Name(x.FirstName, x.LastName)));
-            movie.AppendStarringActors(names);
-            //var names = new List<Name>();
+            var currentActorMovies = _movieRepository.SearchFor(x => x.MovieId == id).First().ActorsMovies.AsEnumerable();
 
-            actors.ForEach(x => _repository.Update(new ActorMovie() { Movie = movie, Actor = x }));
+            var currentActorsIds = currentActorMovies.Select(x => x.Actor);
+            var currentActors = _actorRepository.SearchFor(x => currentActorsIds.Contains(x)).ToList();
+
+            ActorHelpers.UpdateActorsStarringInConcreteMovie(currentActors, newActors, movieVm.Title);
+            MovieHelpers.UpdateMovie(movie, movieVm, currentActors);
+
+            var newActorMovies = newActorsIds.Select(x => new ActorMovie {ActorId = x, MovieId = id});
+
+            _repository.Update(currentActorMovies, newActorMovies);
+
         }
 
         public object Delete(int id)
@@ -87,10 +88,11 @@ namespace WebAPI.Handlers
             throw new NotImplementedException();
         }
 
-        public MoviesHandler(IActorMovieRepository repository, IActorRepository actorRepository)
+        public MoviesHandler(IActorMovieRepository repository, IActorRepository actorRepository, IMovieRepository movieRepository)
         {
             _repository = repository;
             _actorRepository = actorRepository;
+            _movieRepository = movieRepository;
         }
     }
 }

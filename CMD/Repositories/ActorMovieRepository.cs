@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.AppData;
 using WebAPI.Models;
+using WebAPI.Utills.Methods;
 
 namespace WebAPI.Repositories
 {
@@ -33,9 +34,9 @@ namespace WebAPI.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(ActorMovie actorMovie)
+        public void Update(IEnumerable<ActorMovie> oldActorMovies, IEnumerable<ActorMovie> newActorMovies)
         {
-            _context.Update(actorMovie);
+            _context.TryUpdateManyToMany(oldActorMovies, newActorMovies, x => x.ActorId);
             _context.SaveChanges();
         }
 

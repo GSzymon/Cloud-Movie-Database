@@ -24,29 +24,12 @@ namespace WebAPI.Models
         [JsonIgnore]
         public ICollection<ActorMovie> ActorsMovies { get; set; }
 
-
-        public static Movie Create(MovieViewModel movieVm)
+        public void Edit(string title, int year, string genre, string starringActors)
         {
-            return new Movie
-            {
-                Title = movieVm.Title,
-                Year = movieVm.Year,
-                Genre = movieVm.Genre
-            };
-        }
-        public void AppendStarringActors(IEnumerable<Name> names)
-        {
-            var actorNames = names.Select(x => x.FirstName + " " + x.LastName);
-            var actorsToAppend = string.Join(", ", actorNames);
-
-            if (string.IsNullOrEmpty(StarringActors))
-            {
-                StarringActors = actorsToAppend;
-            }
-            else
-            {
-                StarringActors += ", " + actorsToAppend;
-            }
+            Title = title;
+            Year = year;
+            Genre = genre;
+            StarringActors = starringActors;
         }
     }
 }
