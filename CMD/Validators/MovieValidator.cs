@@ -13,7 +13,8 @@ namespace WebAPI.Validators
         {
             if (string.IsNullOrEmpty(modelVm.Title) ||
                 (modelVm.Year > DateTime.Now.Year) ||
-                (modelVm.Year < 1901))
+                (modelVm.Year < 1901) ||
+                (modelVm.StarringActorsIds.Count==0))
             {
                 return false;
             }

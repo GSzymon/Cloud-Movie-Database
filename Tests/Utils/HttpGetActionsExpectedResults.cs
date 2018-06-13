@@ -7,7 +7,7 @@ using WebAPI.ViewModels;
 
 namespace Tests.Utils
 {
-    public static class ExpectedResults
+    public static class HttpGetActionsExpectedResults
     {
         // MoviesController:
         public static JsonResult TestListAllMovies()

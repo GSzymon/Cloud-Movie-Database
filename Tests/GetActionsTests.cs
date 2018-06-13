@@ -11,13 +11,13 @@ using WebAPI.Repositories;
 namespace Tests
 {
     [TestClass]
-    public class ControllersTests
+    public class GetActionsTests
     {
         private static MoviesController _moviesController;
         private static ActorsController _actorsController;
 
-        [AssemblyInitialize]
-        public static void AssemblyInit(TestContext testContext)
+        [ClassInitialize]
+        public static void ClassInit(TestContext testContext)
         {
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
@@ -41,7 +41,7 @@ namespace Tests
         public void TestListAllMovies()
         {
             var movies = JsonConvert.SerializeObject(_moviesController.ListAllMovies().Value);
-            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListAllMovies().Value);
+            var expectedMovies = JsonConvert.SerializeObject(HttpGetActionsExpectedResults.TestListAllMovies().Value);
 
             var result = movies.Equals(expectedMovies);
             Assert.IsTrue(result);
@@ -51,7 +51,7 @@ namespace Tests
         public void TestListMoviesByProperYear()
         {
             var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesByYear(1994).Value);
-            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesByProperYear().Value);
+            var expectedMovies = JsonConvert.SerializeObject(HttpGetActionsExpectedResults.TestListMoviesByProperYear().Value);
 
             var result = movies.Equals(expectedMovies);
             Assert.IsTrue(result);
@@ -71,7 +71,7 @@ namespace Tests
         public void TestListMoviesWithGivenProperActor()
         {
             var movies = JsonConvert.SerializeObject(_moviesController.ListMoviesWithGivenActor(2).Value);
-            var expectedMovies = JsonConvert.SerializeObject(ExpectedResults.TestListMoviesWithGivenProperActor().Value);
+            var expectedMovies = JsonConvert.SerializeObject(HttpGetActionsExpectedResults.TestListMoviesWithGivenProperActor().Value);
 
             var result = movies.Equals(expectedMovies);
             Assert.IsTrue(result);
@@ -87,14 +87,12 @@ namespace Tests
             Assert.IsTrue(result);
         }
 
-
-
         // ActorsController:
         [TestMethod]
         public void TestListActorsStarringInMovie()
         {
             var actors = JsonConvert.SerializeObject(_actorsController.ListActorsStarringInMovie(4).Value);
-            var expectedActors = JsonConvert.SerializeObject(ExpectedResults.TestListActorsStarringInMovie().Value);
+            var expectedActors = JsonConvert.SerializeObject(HttpGetActionsExpectedResults.TestListActorsStarringInMovie().Value);
 
             var result = actors.Equals(expectedActors);
             Assert.IsTrue(result);
