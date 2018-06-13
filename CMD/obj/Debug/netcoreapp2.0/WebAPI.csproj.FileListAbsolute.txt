@@ -6,7 +6,6 @@ C:\Users\Szymon\Source\Repos\CMD\CMD\bin\Debug\netcoreapp2.0\WebAPI.runtimeconfi
 C:\Users\Szymon\Source\Repos\CMD\CMD\bin\Debug\netcoreapp2.0\WebAPI.runtimeconfig.dev.json
 C:\Users\Szymon\Source\Repos\CMD\CMD\bin\Debug\netcoreapp2.0\WebAPI.dll
 C:\Users\Szymon\Source\Repos\CMD\CMD\bin\Debug\netcoreapp2.0\WebAPI.pdb
-C:\Users\Szymon\Source\Repos\CMD\CMD\obj\Debug\netcoreapp2.0\WebAPI.csprojAssemblyReference.cache
 C:\Users\Szymon\Source\Repos\CMD\CMD\obj\Debug\netcoreapp2.0\WebAPI.dll
 C:\Users\Szymon\Source\Repos\CMD\CMD\obj\Debug\netcoreapp2.0\WebAPI.pdb
 C:\Users\Szymek\Source\Repos\Cloud-Movie-Database\CMD\bin\Debug\netcoreapp2.0\WebAPI.deps.json
@@ -20,3 +19,4 @@ C:\Users\Szymek\Source\Repos\Cloud-Movie-Database\CMD\obj\Debug\netcoreapp2.0\We
 C:\Users\Szymek\Source\Repos\Cloud-Movie-Database\CMD\obj\Debug\netcoreapp2.0\WebAPI.dll
 C:\Users\Szymek\Source\Repos\Cloud-Movie-Database\CMD\obj\Debug\netcoreapp2.0\WebAPI.pdb
 C:\Users\Szymek\Source\Repos\Cloud-Movie-Database\CMD\obj\Debug\netcoreapp2.0\WebAPI.csprojAssemblyReference.cache
+C:\Users\Szymon\source\repos\CMD\CMD\obj\Debug\netcoreapp2.0\WebAPI.csprojAssemblyReference.cache
